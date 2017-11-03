@@ -34,7 +34,33 @@ router.post('/authenticate', (req, res) => {
 
     User.getUserByUsername(username, (err, user) => {
         if(err) throw err;
-    });
+        if(!user){
+            return res.json({ success: false, message: 'User not found'});
+        }
+
+        User.comparePassword(password, user.password, (err, isMatch) => {
+            if(err) throw err;
+            if(isMatch){
+                const token = jwt.sign(user, config.secret, {
+                    expiresIn: 604800 // 1 Week  in seconds
+                });
+                res.json({
+                    success: true,
+                    token: 'JWT ' + token,
+                    user: {
+                        username: user.username
+                    }
+                });
+            } else {
+                res.json({ success: false, message: 'Password is incorrect.' })
+            }
+        });
+    })
+});
+
+// Profile
+router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res) => {
+    res.json({ user: req.user });
 });
 
 module.exports = router;
