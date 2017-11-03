@@ -27,4 +27,14 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+// Authenticate
+router.post('/authenticate', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    User.getUserByUsername(username, (err, user) => {
+        if(err) throw err;
+    });
+});
+
 module.exports = router;
