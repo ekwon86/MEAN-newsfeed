@@ -9,6 +9,10 @@ const port = process.env.PORT || 8080;
 const app = express();
 
 
+const users = require('./routes/users');
+app.use('/users', users);
+
+
 /*** MongoDB Connection ***/
 mongoose.connect(config.database);
 mongoose.connection.on('connected', () => {
