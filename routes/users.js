@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
 
-/*** REGISTER POST ROUTE ***/
+// Register
 router.post('/register', (req, res, next) => {
     let newUser = new User({
         username: req.body.username,
@@ -13,10 +13,18 @@ router.post('/register', (req, res, next) => {
     });
 
     User.findOne({'username': req.body.username}, (err, user) => {
-       if(user) {
-           return res.json({ success: false, message: 'Username already exists'});
-       } else {
-
-       }
+        if (user){
+            return res.json({ success: false, message: 'Username already exists'});
+        } else {
+            User.addUser(newUser, (err, user) => {
+                if(err){
+                    res.json({success: false, msg:'Failed to register user'});
+                } else {
+                    res.json({success: true, msg:'User registered'});
+                }
+            });
+        }
     });
 });
+
+module.exports = router;
