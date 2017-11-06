@@ -22,7 +22,7 @@ router.post('/new', (req, res, next) => {
     });
 });
 
-router.get('/allEvents', (req, res) => {
+router.get('/all_events', (req, res) => {
     Event.find({}, (err, events) => {
        if(err) {
            res.json({ success: false, message: err });
