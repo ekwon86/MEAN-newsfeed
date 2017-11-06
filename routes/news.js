@@ -33,7 +33,7 @@ router.get('/all_news', (req, res) => {
                 res.json({ success: true, news: news });
             }
         }
-    });
+    }).sort({ '_id': -1 });
 });
 
 module.exports = router;
