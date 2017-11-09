@@ -5,6 +5,7 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
+const port = process.env.PORT || 8080;
 
 // Connect to DB
 mongoose.connect(config.database);
@@ -26,8 +27,6 @@ const events = require('./routes/events');
 const features = require('./routes/features');
 const news = require('./routes/news');
 
-// Port Number
-const port = process.env.PORT || 8080;
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'client')));

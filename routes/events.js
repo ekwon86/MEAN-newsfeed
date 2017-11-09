@@ -4,7 +4,7 @@ const config = require('../config/database');
 const Event = require('../models/event');
 
 router.post('/new', (req, res, next) => {
-    let newEvent = new Event({
+    const newEvent = new Event({
         name: req.body.name,
         month: req.body.month,
         day: req.body.day,
